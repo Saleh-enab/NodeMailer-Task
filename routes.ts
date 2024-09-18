@@ -39,13 +39,15 @@ export const routes = (app: Express) => {
                 return res.send("Invalid User");
             }
             const userOTP = user.OTP
-            if (userOTP === mailOTP && Date.now() < user.OTPExpiration!) {
+            if (userOTP === mailOTP && user.OTPExpiration && Date.now() < user.OTPExpiration) {
                 user.isVerified = true
                 user.OTP = undefined
                 user.OTPExpiration = undefined
                 await user.save()
+                return res.status(200).send("Verified Successfully.");
+            } else {
+                return res.send("Failed to verify the Email.");
             }
-            return res.status(200).send("Verified Successfully.")
         } catch (err) {
             console.error(err)
         }
