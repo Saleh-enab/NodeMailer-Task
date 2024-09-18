@@ -14,7 +14,6 @@ const userSchema = new mongoose.Schema({
     },
     OTPExpiration: {
         type: Number,
-        default: Date.now() + 24 * 60 * 60 * 1000,
     },
     isVerified: {
         type: Boolean
